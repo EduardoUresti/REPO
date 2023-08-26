@@ -1,24 +1,31 @@
-let registeredUser = "";
-const validUsername = "usuario";
-const validPassword = "contraseña";
+const users = [];
 
-function verifyLogin() {
-  const usernameInput = document.getElementById("username").value;
-  const passwordInput = document.getElementById("password").value;
+function registro() {
+  const userinput = document.getElementById("userinput").value;
+  const password = document.getElementById("password").value;
 
-  if (usernameInput === validUsername && passwordInput === validPassword) {
-    login();
+  if (userinput && password) {
+    const existingUser = users.find(user => user.userinput === userinput);
+    if (existingUser) {
+      document.getElementById("message").textContent = `El usuario ${userinput} ya existe`;
+    } else {
+      users.push({ userinput, password });
+      document.getElementById("message").textContent = `Registro completo, ${userinput}!`;
+    }
   } else {
-    document.getElementById("message").textContent = "Login incorrecto";
+    document.getElementById("message").textContent = "Llenar campos";
   }
 }
 
 function login() {
-  document.getElementById("message").textContent = "Login correcto";
-}
+  const userinput = document.getElementById("userinput").value;
+  const password = document.getElementById("password").value;
 
-function registro() {
-  const username = document.getElementById("username").value;
-  registeredUser = username;
-  document.getElementById("message").textContent = "Registro correcto. Usuario: " + username;
+  const foundUser = users.find(user => user.userinput === userinput && user.password === password);
+
+  if (foundUser) {
+    document.getElementById("message").textContent = `Login exitoso ${userinput}`;
+  } else {
+    document.getElementById("message").textContent = "Usuario o password equivocado";
+  }
 }
